@@ -1,0 +1,108 @@
+-------------------------------operations available:
+
+pa
+pb	top number goes to top of the other stack
+sa
+sb
+ss	swap the 2 top numbers
+ra
+rb
+rr	shift up
+rra
+rrb
+rrr	shift down
+
+stack needs to be sorted from top to bottom
+
+-------------------------------How to sort a stack...
+
+The human way, first
+
+2 ints:
+
+Simply swap if you need to
+
+-> either make a special case or make sure the general way works for 2
+
+3 ints:
+(goal 3 or less)
+
+a	b	c	d	e	f
+-	-	-	-	-	-
+1	1	2	2	3	3
+2	3	1	3	1	2
+3	2	3	1	2	1
+
+a: do nothing
+why: sorted already
+b: ra, sa, rra or pb, sa, pa
+why: 3 and 2 need to be swapped so put the 1 away
+c: sa
+why: 1 and 2 are not in correct order
+d: rra
+why: sorted already
+e: ra
+why: sorted already
+f: sa rra
+why: 3 2 not in order, then sorted
+
+-> the main reasoning here is that if the stack is not already sorted, we find unsorted values and swap them
+-> applying only this method (bubble sort) is going to be super slow though for long stacks, let's see 4 ints
+
+4 ints:
+(goal 12 or less)
+
+a	b	c	d	e	f	g	h	i	j	k	l	m	n	o	p	q	r	s	t	u	v	w	x
+-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-
+1	1	1	1	1	1	2	2	2	2	2	2	3	3	3	3	3	3	4	4	4	4	4	4
+2	2	3	3	4	4	1	1	3	3	4	4	1	1	2	2	4	4	1	1	2	2	3	3
+3	4	2	4	2	3	3	4	1	4	1	3	2	4	1	4	1	2	2	3	1	3	1	2
+4	3	4	2	3	2	4	3	4	1	3	1	4	2	4	1	2	1	3	2	3	1	2	1
+
+a: nothing
+j, q, s: some rotations, already sorted
+
+-> easiest ones which work based on our previous algorithm
+
+b: ra ra sa rra rra
+c: ra sa rra
+d: rra sa
+e: sa ra
+g: sa
+i: ra ra sa ra
+k: rra sa rra
+l: ra sa rra rra
+m: rra sa ra ra
+p: sa rra
+r: ra ra sa
+w: sa ra ra
+
+-> the ones which work well based on previous algorithm
+-> however, we need to add logic to choose whether to ra or rra (which is fastest?)
+-> there's an added step: how to choose what to swap
+r: ra ra sa
+but if we apply the basic instructions above (if not sorted find values that need to be swapped)
+and we parse from top to bottom, the first values we find are 4 2
+with this naive approach, the beginning becomes:
+r: ra sa
+then 4 and 1 need to be swapped
+r: ra sa ra sa
+and then it devolves into an infinite loop (see below)
+hence we need an additional rule to detect what needs swapping
+
+3	4	2	4	1	4	3	
+4	2	4	1	4	3	4	
+2	1	1	3	3	2	2	
+1	3	3	2	2	1	1	
+	
+n: 
+t: 
+u: 
+v: 
+
+-> these are woven and with our prev algorithm, they're less efficient
+
+h: 
+f: 
+o: 
+x: 
